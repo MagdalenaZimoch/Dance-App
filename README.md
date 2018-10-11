@@ -1,5 +1,5 @@
 # StepMusic - Aplikacja okienkowa/mobilna
-> Głównym celem programu będzie obsługa plików muzycznych i tworzenie układu tancznego.
+> Głównym celem programu będzie uworzenie układu tancznego na podstawie wybranego utworu muzycznego.
 
 ## 
 * [Opis](#Opis)
