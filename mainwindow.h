@@ -4,6 +4,11 @@
 #include <QMainWindow>
 #include <QMediaPlayer>
 #include <QDebug>
+#include <QFileDialog>
+#include <QVideoWidget>
+#include <QString>
+#include <QMovie>
+#include <QPropertyAnimation>
 
 namespace Ui {
 class MainWindow;
@@ -32,9 +37,12 @@ private slots:
 
     void on_skipbtn_clicked();
 
+    void on_newstepbtn_clicked();
+
 private:
     Ui::MainWindow *ui;
-    QMediaPlayer *player;
+    QMediaPlayer* player;
+    QVideoWidget* wideo;
 };
 
 #endif // MAINWINDOW_H
