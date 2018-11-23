@@ -10,6 +10,7 @@
 #include <QMovie>
 #include <QPropertyAnimation>
 
+
 namespace Ui {
 class MainWindow;
 }
@@ -35,7 +36,7 @@ private slots:
 
     void on_stopbtn_clicked();
 
-    void on_skipbtn_clicked();
+    void on_pausebtn_clicked();
 
     void on_newstepbtn_clicked();
 
@@ -43,6 +44,8 @@ private:
     Ui::MainWindow *ui;
     QMediaPlayer* player;
     QVideoWidget* wideo;
+    QMovie* film;
+    QMovie* a[4];
 };
 
 #endif // MAINWINDOW_H

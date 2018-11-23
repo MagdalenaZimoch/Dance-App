@@ -12,9 +12,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     player = new QMediaPlayer(this);
     //Być może za pomocą tego będzie wyświetlany końcowy układ:
-    wideo = new QVideoWidget(this);
-    player->setVideoOutput(wideo);
-    wideo->show();
+    film  = new QMovie(this);
+    a[4] = new QMovie(this);
+    //player->setVideoOutput(film);
+    //ui->Layout1->(film);
+    film->setFileName("C:/Users/Magda/Documents/build-mojodtwarzacz-Desktop_Qt_5_6_0_MinGW_32bit-Debug/renifer.gif");
+    ui->filmlabel->setMovie(film);
+    //a[1]->setFileName("C:/Users/Magda/Documents/build-mojodtwarzacz-Desktop_Qt_5_6_0_MinGW_32bit-Debug/animacje.gif");
+
+    //Ikony przycisków
+    ui->playbtn->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
+    ui->stopbtn->setIcon(style()->standardIcon(QStyle::SP_MediaStop));
+    ui->pausebtn->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
+    ui->openbtn->setIcon(style()->standardIcon(QStyle::SP_DialogOpenButton));
+    ui->newstepbtn->setIcon(style()->standardIcon(QStyle::SP_ArrowUp));
+
+
 
     connect(player, &QMediaPlayer::positionChanged,this,&MainWindow::on_positionnchanged);
     connect(player, &QMediaPlayer::durationChanged,this,&MainWindow::on_durationnchanged);
@@ -29,7 +42,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_openbtn_clicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this,"Open a file","","Music File(*.mp3)");
+    //załadowanie pliku
+    QString filename = QFileDialog::getOpenFileName(this,"Open a file","","Music File(*.*)");
+    //qDebug()<<"tutaj jest path: "+filename;
+
     QString name = QFileInfo(filename).fileName();
     on_stopbtn_clicked();
     player->setMedia(QUrl::fromLocalFile(filename));
@@ -57,6 +73,7 @@ void MainWindow::on_playbtn_clicked()
 {
     player->setVolume(100);
     player->play();
+    film->start();
 }
 
 void MainWindow::on_stopbtn_clicked()
@@ -65,7 +82,7 @@ void MainWindow::on_stopbtn_clicked()
 
 }
 
-void MainWindow::on_skipbtn_clicked()
+void MainWindow::on_pausebtn_clicked()
 {
      player->pause();
 }
