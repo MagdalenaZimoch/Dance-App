@@ -10,15 +10,58 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    QSqlDatabase mydb = QSqlDatabase::addDatabase("QSQLITE");
+    mydb.setDatabaseName("C:/Users/Magda/Documents/mojodtwarzacz/test.db");
+
+    if(mydb.open())
+    {
+        qDebug()<<"udalo sie";
+
+        mydb.close();
+    }
+
+
+
     player = new QMediaPlayer(this);
-    //Być może za pomocą tego będzie wyświetlany końcowy układ:
+    //Za pomocą tego będzie wyświetlany końcowy układ:
     film  = new QMovie(this);
-    a[4] = new QMovie(this);
-    //player->setVideoOutput(film);
-    //ui->Layout1->(film);
     film->setFileName("C:/Users/Magda/Documents/build-mojodtwarzacz-Desktop_Qt_5_6_0_MinGW_32bit-Debug/renifer.gif");
     ui->filmlabel->setMovie(film);
-    //a[1]->setFileName("C:/Users/Magda/Documents/build-mojodtwarzacz-Desktop_Qt_5_6_0_MinGW_32bit-Debug/animacje.gif");
+
+
+    //wygląd :
+    auto central = new QWidget(this);
+    auto grid = new QGridLayout(this);
+    central->setLayout(grid);
+    ui->scrollArea->setWidget(central);
+    grid->setColumnMinimumWidth(3,120);
+    grid->setVerticalSpacing(6);
+    grid->setHorizontalSpacing(6);
+
+    //dynamiczne dodawanie przycisków
+
+    for(int i=0;i<18;i++)
+    {
+        auto anim = new QPushButton(this);
+        a.append(anim);
+
+        auto movi = new QMovie(this);
+        movie.append(movi);
+
+        grid->addWidget(a[i]);
+
+        a[i]->setMinimumHeight(120);
+        a[i]->setMinimumWidth(120);
+        if (i%2==0){
+        movie[i]->setFileName("C:/Users/Magda/Documents/build-mojodtwarzacz-Desktop_Qt_5_6_0_MinGW_32bit-Debug/Akrobacje.gif");
+        }
+        else{
+        movie[i]->setFileName("C:/Users/Magda/Documents/build-mojodtwarzacz-Desktop_Qt_5_6_0_MinGW_32bit-Debug/Akrobacje2.gif");
+        }
+        connect(movie[i], &QMovie::frameChanged, [=]{a[i]->setIcon(movie[i]->currentPixmap());});
+        a[i]->setIconSize(QSize(120,120));
+        movie[i]->start();
+    }
 
     //Ikony przycisków
     ui->playbtn->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
@@ -28,7 +71,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->newstepbtn->setIcon(style()->standardIcon(QStyle::SP_ArrowUp));
 
 
-
     connect(player, &QMediaPlayer::positionChanged,this,&MainWindow::on_positionnchanged);
     connect(player, &QMediaPlayer::durationChanged,this,&MainWindow::on_durationnchanged);
 }
@@ -36,8 +78,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete player;
-    delete wideo;
+
 }
 
 void MainWindow::on_openbtn_clicked()
@@ -79,12 +120,14 @@ void MainWindow::on_playbtn_clicked()
 void MainWindow::on_stopbtn_clicked()
 {
     player->stop();
+    film->stop();
 
 }
 
 void MainWindow::on_pausebtn_clicked()
 {
      player->pause();
+     film->setSpeed(200);
 }
 
 void MainWindow::on_newstepbtn_clicked()

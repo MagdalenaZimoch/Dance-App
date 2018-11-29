@@ -14,10 +14,37 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(170, 170, 254);T</string>
+   <string notr="true">background-color: rgb(31, 62, 93);
+color: rgb(255, 255, 255);</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QFrame" name="frame_4">
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(35, 71, 107);</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0">
+        <widget class="QLabel" name="filmlabel">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0, 0, 0);
+background-color: qradialgradient(spread:repeat, cx:0.5, cy:0.5, radius:0.077, fx:0.5, fy:0.5, stop:0 rgba(0, 169, 255, 110), stop:0.497326 rgba(0, 0, 0, 147), stop:1 rgba(0, 169, 255, 147));</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
     <item row="0" column="1">
      <widget class="QFrame" name="frame_3">
       <property name="sizePolicy">
@@ -45,6 +72,10 @@ background-color: rgb(255, 255, 255);</string>
            <height>21</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(30, 60, 91);
+color: rgb(255, 255, 255);</string>
+         </property>
          <property name="text">
           <string>Add Step</string>
          </property>
@@ -53,275 +84,63 @@ background-color: rgb(255, 255, 255);</string>
        <item>
         <widget class="QScrollArea" name="scrollArea">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="MinimumExpanding">
+          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>576</width>
+           <width>570</width>
            <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>570</width>
            <height>16777215</height>
           </size>
          </property>
-         <property name="whatsThis">
-          <string extracomment="pole gdzie są kroko"/>
+         <property name="baseSize">
+          <size>
+           <width>3</width>
+           <height>4</height>
+          </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(119, 119, 177);</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::HLine</enum>
+          <string notr="true">background-color: rgb(30, 60, 91);</string>
          </property>
          <property name="verticalScrollBarPolicy">
-          <enum>Qt::ScrollBarAlwaysOn</enum>
+          <enum>Qt::ScrollBarAsNeeded</enum>
+         </property>
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-         </property>
-         <widget class="QWidget" name="widgetstep">
+         <widget class="QWidget" name="scrollAreaWidgetContents">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>558</width>
-            <height>400</height>
+            <width>568</width>
+            <height>421</height>
            </rect>
           </property>
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-            <horstretch>4</horstretch>
-            <verstretch>4</verstretch>
+           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
            </sizepolicy>
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>568</width>
             <height>0</height>
            </size>
           </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="sizeIncrement">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_2">
-           <item row="1" column="3">
-            <widget class="QPushButton" name="pushButton_12">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>121</horstretch>
-               <verstretch>121</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>121</width>
-               <height>121</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>121</width>
-               <height>121</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>PushButton</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QPushButton" name="pushButton_10">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>121</horstretch>
-               <verstretch>121</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>121</width>
-               <height>121</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>121</width>
-               <height>121</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>PushButton</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QPushButton" name="btn2">
-             <property name="minimumSize">
-              <size>
-               <width>121</width>
-               <height>121</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>121</width>
-               <height>121</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>PushButton</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="4">
-            <widget class="QPushButton" name="pushButton_13">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>121</horstretch>
-               <verstretch>121</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>121</width>
-               <height>121</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>121</width>
-               <height>121</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>PushButton</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QPushButton" name="pushButton_11">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>121</horstretch>
-               <verstretch>121</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>121</width>
-               <height>121</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>121</width>
-               <height>121</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>PushButton</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QPushButton" name="pushButton_9">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>121</horstretch>
-               <verstretch>121</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>121</width>
-               <height>121</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>121</width>
-               <height>121</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>PushButton</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="4">
-            <widget class="QPushButton" name="pushButton_6">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>121</horstretch>
-               <verstretch>121</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>121</width>
-               <height>121</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>121</width>
-               <height>121</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>PushButton</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="3">
-            <widget class="QPushButton" name="pushButton_4">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>121</width>
-               <height>121</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>121</width>
-               <height>121</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>PushButton</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
          </widget>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Instruction: </string>
-         </property>
         </widget>
        </item>
        <item>
@@ -333,7 +152,7 @@ background-color: rgb(255, 255, 255);</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(151, 151, 225);</string>
+          <string notr="true">background-color: rgb(30, 60, 91);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -349,6 +168,10 @@ background-color: rgb(255, 255, 255);</string>
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(30, 60, 91);
+color: rgb(255, 255, 255);</string>
             </property>
             <property name="text">
              <string>Tytuł piosenki, która aktualnie leci</string>
@@ -369,6 +192,9 @@ background-color: rgb(255, 255, 255);</string>
               <height>23</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);</string>
+            </property>
             <property name="text">
              <string>Open</string>
             </property>
@@ -386,7 +212,7 @@ background-color: rgb(255, 255, 255);</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(163, 163, 243);</string>
+          <string notr="true">background-color: rgb(30, 60, 91);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -398,7 +224,7 @@ background-color: rgb(255, 255, 255);</string>
           <item>
            <widget class="QSlider" name="progresslider">
             <property name="styleSheet">
-             <string notr="true">color: rgb(170, 0, 255);
+             <string notr="true">color: rgb(255, 255, 255);
 selection-color: rgb(0, 255, 255);</string>
             </property>
             <property name="orientation">
@@ -408,6 +234,9 @@ selection-color: rgb(0, 255, 255);</string>
           </item>
           <item>
            <widget class="QPushButton" name="playbtn">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);</string>
+            </property>
             <property name="text">
              <string>Play</string>
             </property>
@@ -415,6 +244,9 @@ selection-color: rgb(0, 255, 255);</string>
           </item>
           <item>
            <widget class="QPushButton" name="stopbtn">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);</string>
+            </property>
             <property name="text">
              <string>Stop</string>
             </property>
@@ -422,37 +254,15 @@ selection-color: rgb(0, 255, 255);</string>
           </item>
           <item>
            <widget class="QPushButton" name="pausebtn">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);</string>
+            </property>
             <property name="text">
              <string>Pause</string>
             </property>
            </widget>
           </item>
          </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QFrame" name="frame_2">
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(170, 255, 255);</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0">
-        <widget class="QLabel" name="filmlabel">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0, 0, 0);</string>
-         </property>
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
         </widget>
        </item>
       </layout>

@@ -3,12 +3,14 @@
 
 #include <QMainWindow>
 #include <QMediaPlayer>
-#include <QDebug>
+#include <QtDebug>
 #include <QFileDialog>
 #include <QVideoWidget>
 #include <QString>
 #include <QMovie>
 #include <QPropertyAnimation>
+#include <QVector>
+#include <QtSql>
 
 
 namespace Ui {
@@ -45,7 +47,10 @@ private:
     QMediaPlayer* player;
     QVideoWidget* wideo;
     QMovie* film;
-    QMovie* a[4];
+    QVector<QPushButton*> a;
+    QVector<QMovie*> movie;
+
+
 };
 
 #endif // MAINWINDOW_H
