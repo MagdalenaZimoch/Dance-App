@@ -13,6 +13,7 @@
 #include <QtSql>
 
 
+
 namespace Ui {
 class MainWindow;
 }
@@ -42,6 +43,10 @@ private slots:
 
     void on_newstepbtn_clicked();
 
+    void klickbtn();
+
+    void nameof();
+
 private:
     Ui::MainWindow *ui;
     QMediaPlayer* player;
@@ -49,8 +54,6 @@ private:
     QMovie* film;
     QVector<QPushButton*> a;
     QVector<QMovie*> movie;
-
-
 };
 
 #endif // MAINWINDOW_H

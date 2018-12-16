@@ -1,7 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "name.h"
+#include "addnew.h"
+#include "step.h"
 #include <qdebug.h>
 #include <qdesktopservices.h>
+#include <QSqlQuery>
+
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -9,24 +14,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    QSqlDatabase mydb = QSqlDatabase::addDatabase("QSQLITE");
-    mydb.setDatabaseName("C:/Users/Magda/Documents/mojodtwarzacz/test.db");
-
-    if(mydb.open())
-    {
-        qDebug()<<"udalo sie";
-
-        mydb.close();
-    }
-
-
-
-    player = new QMediaPlayer(this);
-    //Za pomocą tego będzie wyświetlany końcowy układ:
-    film  = new QMovie(this);
-    film->setFileName("C:/Users/Magda/Documents/build-mojodtwarzacz-Desktop_Qt_5_6_0_MinGW_32bit-Debug/renifer.gif");
-    ui->filmlabel->setMovie(film);
 
 
     //wygląd :
@@ -38,30 +25,51 @@ MainWindow::MainWindow(QWidget *parent) :
     grid->setVerticalSpacing(6);
     grid->setHorizontalSpacing(6);
 
-    //dynamiczne dodawanie przycisków
 
-    for(int i=0;i<18;i++)
+
+    //Połączennie z bazą danych
+    QSqlDatabase mydb = QSqlDatabase::addDatabase("QSQLITE");
+    mydb.setDatabaseName("C:/Users/Magda/Documents/mojodtwarzacz/test.db");
+
+
+    if(mydb.open())
     {
-        auto anim = new QPushButton(this);
-        a.append(anim);
 
-        auto movi = new QMovie(this);
-        movie.append(movi);
+        QSqlQuery query("SELECT * FROM Kroki");
+        int i = 0;
+        while(query.next())
+        {
+            auto anim = new QPushButton(this);
+            a.append(anim);
 
-        grid->addWidget(a[i]);
+            auto movi = new QMovie(this);
+            movie.append(movi);
 
-        a[i]->setMinimumHeight(120);
-        a[i]->setMinimumWidth(120);
-        if (i%2==0){
-        movie[i]->setFileName("C:/Users/Magda/Documents/build-mojodtwarzacz-Desktop_Qt_5_6_0_MinGW_32bit-Debug/Akrobacje.gif");
+            grid->addWidget(a[i]);
+
+            a[i]->setMinimumHeight(120);
+            a[i]->setMinimumWidth(120);
+
+
+            QString path = query.value(2).toString();
+
+            movie[i]->setFileName(path);
+
+            connect(movie[i], &QMovie::frameChanged, [=]{a[i]->setIcon(movie[i]->currentPixmap());});
+            a[i]->setIconSize(QSize(120,120));
+            movie[i]->start();
+            connect(a[i],SIGNAL(clicked()), this, SLOT(klickbtn( )));
+            i++;
         }
-        else{
-        movie[i]->setFileName("C:/Users/Magda/Documents/build-mojodtwarzacz-Desktop_Qt_5_6_0_MinGW_32bit-Debug/Akrobacje2.gif");
-        }
-        connect(movie[i], &QMovie::frameChanged, [=]{a[i]->setIcon(movie[i]->currentPixmap());});
-        a[i]->setIconSize(QSize(120,120));
-        movie[i]->start();
+
+
     }
+
+    player = new QMediaPlayer(this);
+    //Za pomocą tego będzie wyświetlany końcowy układ:
+    film  = new QMovie(this);
+    film->setFileName("C:/Users/Magda/Documents/build-mojodtwarzacz-Desktop_Qt_5_6_0_MinGW_32bit-Debug/renifer.gif");
+    ui->filmlabel->setMovie(film);
 
     //Ikony przycisków
     ui->playbtn->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
@@ -73,11 +81,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(player, &QMediaPlayer::positionChanged,this,&MainWindow::on_positionnchanged);
     connect(player, &QMediaPlayer::durationChanged,this,&MainWindow::on_durationnchanged);
+
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+
+
+
 
 }
 
@@ -85,7 +98,6 @@ void MainWindow::on_openbtn_clicked()
 {
     //załadowanie pliku
     QString filename = QFileDialog::getOpenFileName(this,"Open a file","","Music File(*.*)");
-    //qDebug()<<"tutaj jest path: "+filename;
 
     QString name = QFileInfo(filename).fileName();
     on_stopbtn_clicked();
@@ -132,5 +144,65 @@ void MainWindow::on_pausebtn_clicked()
 
 void MainWindow::on_newstepbtn_clicked()
 {
+    addnew newstep;
+    newstep.setModal(true);
+    newstep.exec();
+}
+
+void MainWindow::klickbtn()
+{
+    player->pause();
+    QObject* btn = QObject::sender();
+    QSqlQuery query;
+    QSqlQuery query2("SELECT *FROM Kroki");
+    qint32 ktory;
+    for(int i=0;i<=a.length()-1;i++)
+    {
+
+        if(btn == a[i])
+        {
+            ktory = i;
+            qDebug()<<i;
+        }
+        movie[i]->stop();
+    }
+    qint32 count = 0;
+    while(query2.next())
+    {
+        qDebug()<<count <<" : " << ktory;
+        if(count == ktory)
+        {
+
+            QString id = query2.value(0).toString();
+            qDebug()<<id;
+            query.exec("UPDATE Kroki SET Klik = 1 WHERE id = "+id);
+            qDebug()<<"wpisany";
+        }
+        else
+        {
+            QString id = query2.value(0).toString();
+            query.exec("UPDATE Kroki SET Klik = 0 WHERE id = "+id);
+        }
+        count++;
+
+    }
+
+
+    Step step;
+    step.setModal(true);
+    step.exec();
+    player->play();
+    for(int i=0;i<=a.length()-1;i++)
+    {
+        movie[i]->start();
+    }
 
 }
+
+void MainWindow::nameof()
+{
+
+}
+
+
+
