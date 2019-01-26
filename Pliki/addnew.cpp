@@ -7,6 +7,7 @@ addnew::addnew(QWidget *parent) :
     ui(new Ui::addnew)
 {
     ui->setupUi(this);
+    ui->loadbtn->setIcon(style()->standardIcon(QStyle::SP_DialogOpenButton));
 }
 
 addnew::~addnew()

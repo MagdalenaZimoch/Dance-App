@@ -21,15 +21,26 @@ private slots:
     void on_cancelbtn_clicked();
 
     void on_okbtn_clicked();
+
+    void on_radioustaw_clicked();
+
+    void on_radiozostaw_clicked();
+
+    void on_sprawdzbtn_clicked();
+
 public slots:
 
     void odbierznazwa(QString nazwa);
+
 
 private:
     Ui::Step *ui;
 
 public:
     QString *nazwaukladu;
+    QTime *time;
+    qint32 radio;
+
 
 };
 

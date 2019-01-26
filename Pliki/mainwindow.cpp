@@ -6,8 +6,9 @@
 #include <qdebug.h>
 #include <qdesktopservices.h>
 #include <QSqlQuery>
+#include <QRegion>
 
-
+QString namename;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -15,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-
+    nameofsystem = new QString();
     //wygląd :
     auto central = new QWidget(this);
     auto grid = new QGridLayout(this);
@@ -49,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
             a[i]->setMinimumHeight(120);
             a[i]->setMinimumWidth(120);
+            a[i]->setStyleSheet("* { background-color:  rgb(255,255,255) }");
 
 
             QString path = query.value(2).toString();
@@ -66,9 +68,9 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
     player = new QMediaPlayer(this);
+
     //Za pomocą tego będzie wyświetlany końcowy układ:
     film  = new QMovie(this);
-    film->setFileName("C:/Users/Magda/Documents/build-mojodtwarzacz-Desktop_Qt_5_6_0_MinGW_32bit-Debug/renifer.gif");
     ui->filmlabel->setMovie(film);
 
     //Ikony przycisków
@@ -83,15 +85,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(player, &QMediaPlayer::durationChanged,this,&MainWindow::on_durationnchanged);
 
 
+
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-
-
-
-
 }
 
 void MainWindow::on_openbtn_clicked()
@@ -139,7 +139,6 @@ void MainWindow::on_stopbtn_clicked()
 void MainWindow::on_pausebtn_clicked()
 {
      player->pause();
-     film->setSpeed(200);
 }
 
 void MainWindow::on_newstepbtn_clicked()
@@ -162,21 +161,16 @@ void MainWindow::klickbtn()
         if(btn == a[i])
         {
             ktory = i;
-            qDebug()<<i;
         }
         movie[i]->stop();
     }
     qint32 count = 0;
     while(query2.next())
     {
-        qDebug()<<count <<" : " << ktory;
         if(count == ktory)
         {
-
             QString id = query2.value(0).toString();
-            qDebug()<<id;
             query.exec("UPDATE Kroki SET Klik = 1 WHERE id = "+id);
-            qDebug()<<"wpisany";
         }
         else
         {
@@ -184,7 +178,6 @@ void MainWindow::klickbtn()
             query.exec("UPDATE Kroki SET Klik = 0 WHERE id = "+id);
         }
         count++;
-
     }
 
 
@@ -198,11 +191,45 @@ void MainWindow::klickbtn()
     }
 
 }
-
-void MainWindow::nameof()
+void MainWindow::namesystem(QString name)
 {
-
+    *nameofsystem = name;
+    namename = name;
 }
 
+void MainWindow::on_pushButton_clicked()
+{
+    ui->progresslider->setValue(0);
+    player->setPosition(0);
+    qDebug()<< namename;
+    //połączenie z bazą danych
+
+    QSqlQuery query4("SELECT * FROM Uklady WHERE Name = '"+namename+"'");
 
 
+    while(query4.next())
+    {
+            //odczytywanie id kroku
+            qint32 steps = query4.value(2).toInt();
+            //odczytywanie czasu
+            qint32 time = query4.value(3).toInt();
+            //odczytywanie ścieżki do pliku o takim samym id
+            QSqlQuery query5("SELECT * FROM Kroki");
+            while(query5.next())
+            {
+                qint32 id = query5.value(0).toInt();
+                if (id == steps)
+                {
+                    QString path = query5.value(2).toString();
+                    QString disp = query5.value(5).toString();
+                    film->setFileName(path);
+                    ui->opiskrokupodczasodtwarzania->setText(disp);
+                    film->start();
+                    //odtworzenie układu jak będzie wiadome ile czasu ma zajmować dany krok
+                }
+            }
+
+
+    }
+
+}

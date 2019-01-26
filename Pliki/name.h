@@ -2,6 +2,7 @@
 #define NAME_H
 
 #include <QWidget>
+#include <QVector>
 
 namespace Ui {
 class Name;
@@ -21,8 +22,9 @@ private slots:
 
 private:
     Ui::Name *ui;
+    QVector<QString> names;
 public:
-    QString* nazwa;
+    QString *nazwa;
 
 signals:
     void wyslijnazwe(QString nazwa);

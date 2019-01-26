@@ -26,7 +26,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void nameof(QString name);
+
+
 private slots:
+    void namesystem(QString name);
+
     void on_openbtn_clicked();
 
     void on_progresslider_sliderMoved(int position);
@@ -45,7 +50,7 @@ private slots:
 
     void klickbtn();
 
-    void nameof();
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -54,6 +59,9 @@ private:
     QMovie* film;
     QVector<QPushButton*> a;
     QVector<QMovie*> movie;
+    QString* nameofsystem;
+
+
 };
 
 #endif // MAINWINDOW_H
