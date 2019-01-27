@@ -28,7 +28,17 @@ public:
 
     void nameof(QString name);
 
+    QVector<QString> path_sprawdz;
 
+    QVector<QString> disc_sprawdz;
+
+    QVector<qint32> speed_sprawdz;
+
+
+public slots:
+    void odtworz(int l);
+
+    void startnewanim();
 private slots:
     void namesystem(QString name);
 
@@ -56,10 +66,10 @@ private:
     Ui::MainWindow *ui;
     QMediaPlayer* player;
     QVideoWidget* wideo;
-    QMovie* film;
     QVector<QPushButton*> a;
-    QVector<QMovie*> movie;
+    QVector<QMovie*> film;
     QString* nameofsystem;
+signals:
 
 
 };

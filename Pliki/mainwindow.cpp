@@ -8,8 +8,9 @@
 #include <QSqlQuery>
 #include <QRegion>
 
-QString namename;
 
+QString namename;
+int i;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -44,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
             a.append(anim);
 
             auto movi = new QMovie(this);
-            movie.append(movi);
+            film.append(movi);
 
             grid->addWidget(a[i]);
 
@@ -55,11 +56,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
             QString path = query.value(2).toString();
 
-            movie[i]->setFileName(path);
+            film[i]->setFileName(path);
 
-            connect(movie[i], &QMovie::frameChanged, [=]{a[i]->setIcon(movie[i]->currentPixmap());});
+            connect(film[i], &QMovie::frameChanged, [=]{a[i]->setIcon(film[i]->currentPixmap());});
             a[i]->setIconSize(QSize(120,120));
-            movie[i]->start();
+            film[i]->start();
             connect(a[i],SIGNAL(clicked()), this, SLOT(klickbtn( )));
             i++;
         }
@@ -70,8 +71,9 @@ MainWindow::MainWindow(QWidget *parent) :
     player = new QMediaPlayer(this);
 
     //Za pomocą tego będzie wyświetlany końcowy układ:
-    film  = new QMovie(this);
-    ui->filmlabel->setMovie(film);
+
+
+
 
     //Ikony przycisków
     ui->playbtn->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
@@ -83,10 +85,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(player, &QMediaPlayer::positionChanged,this,&MainWindow::on_positionnchanged);
     connect(player, &QMediaPlayer::durationChanged,this,&MainWindow::on_durationnchanged);
-
-
-
-
 }
 
 MainWindow::~MainWindow()
@@ -126,13 +124,13 @@ void MainWindow::on_playbtn_clicked()
 {
     player->setVolume(100);
     player->play();
-    film->start();
+    //film->start();
 }
 
 void MainWindow::on_stopbtn_clicked()
 {
     player->stop();
-    film->stop();
+    //film->stop();
 
 }
 
@@ -162,7 +160,7 @@ void MainWindow::klickbtn()
         {
             ktory = i;
         }
-        movie[i]->stop();
+        film[i]->stop();
     }
     qint32 count = 0;
     while(query2.next())
@@ -187,7 +185,7 @@ void MainWindow::klickbtn()
     player->play();
     for(int i=0;i<=a.length()-1;i++)
     {
-        movie[i]->start();
+        film[i]->start();
     }
 
 }
@@ -196,23 +194,49 @@ void MainWindow::namesystem(QString name)
     *nameofsystem = name;
     namename = name;
 }
+void MainWindow::odtworz(int l)
+{
+    i=l;
+    auto movie  = new QMovie(this);
+    ui->filmlabel->setMovie(movie);
+    movie->setFileName(path_sprawdz[i]);
+    movie->start();
+    movie->setSpeed(speed_sprawdz[i]);
+    ui->textBrowser->setText(disc_sprawdz[i]);
+    connect(movie, &QMovie::frameChanged, this,
+        [movie]()
+        {
+            if(movie->currentFrameNumber() == (movie->frameCount()-1))
+             {
+                 movie->stop();
+                 i++;
+
+                 if(movie->state() == QMovie::NotRunning)
+                 {
+                   emit movie->finished();
+                 }
+             }
+        }
+     );
+    connect(movie,QMovie::finished,this,&MainWindow::startnewanim);
+}
 
 void MainWindow::on_pushButton_clicked()
 {
+
     ui->progresslider->setValue(0);
     player->setPosition(0);
-    qDebug()<< namename;
     //połączenie z bazą danych
 
     QSqlQuery query4("SELECT * FROM Uklady WHERE Name = '"+namename+"'");
 
-
     while(query4.next())
     {
+
             //odczytywanie id kroku
             qint32 steps = query4.value(2).toInt();
             //odczytywanie czasu
-            qint32 time = query4.value(3).toInt();
+            int time = query4.value(3).toInt();
             //odczytywanie ścieżki do pliku o takim samym id
             QSqlQuery query5("SELECT * FROM Kroki");
             while(query5.next())
@@ -220,16 +244,34 @@ void MainWindow::on_pushButton_clicked()
                 qint32 id = query5.value(0).toInt();
                 if (id == steps)
                 {
+
                     QString path = query5.value(2).toString();
-                    QString disp = query5.value(5).toString();
-                    film->setFileName(path);
-                    ui->opiskrokupodczasodtwarzania->setText(disp);
-                    film->start();
-                    //odtworzenie układu jak będzie wiadome ile czasu ma zajmować dany krok
+                    QString disc = query5.value(5).toString();
+                    int time2 = query5.value(3).toInt();
+                    qint32 speedd =  time2*100/time;
+                    path_sprawdz.append(path);
+                    disc_sprawdz.append(disc);
+                    speed_sprawdz.append(speedd);
                 }
+
             }
-
-
     }
+    i = 0;
+    odtworz(i);
 
 }
+void MainWindow::startnewanim()
+{
+    if(i <= path_sprawdz.size()-1)
+    {
+    odtworz(i);
+    }
+    else
+    {
+        i=0;
+        path_sprawdz.clear();
+        disc_sprawdz.clear();
+        speed_sprawdz.clear();
+    }
+}
+
