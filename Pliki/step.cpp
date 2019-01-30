@@ -2,16 +2,25 @@
 #include "ui_step.h"
 #include "mainwindow.h"
 #include "name.h"
+
 QString namee;
 QString nazwa2;
 QTime time1;
-qint32 a;
+qint32 a; //czas pierwotny
+qint32 speed;
+qint32 b; //czas na jaki zmieniamy
+qint32 position_start;
+QString filename;
+QString path_sprawdz;
+qint32 speed_sprawdz;
+
+
+
 Step::Step(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Step)
 {
     ui->setupUi(this);
-
     auto movie = new QMovie(this);
     QSqlQuery query("SELECT * FROM Kroki WHERE Klik=1");
     while(query.next())
@@ -19,6 +28,7 @@ Step::Step(QWidget *parent) :
             QString name = query.value(1).toString();
             namee = name;
             QString path = query.value(2).toString();
+            path_sprawdz = path;
             QString disc = query.value(5).toString();
 
             movie->setFileName(path);
@@ -63,6 +73,7 @@ Step::Step(QWidget *parent) :
 Step::~Step()
 {
     delete ui;
+    delete movie;
 }
 
 void Step::on_okbtn_clicked()
@@ -71,10 +82,13 @@ void Step::on_okbtn_clicked()
     if(radio == 1)
     {
         time = ui->spinBox->value();
+
     }
     else if(radio == 0)
     {
         time = a;
+        qDebug()<<a;
+
     }
     QSqlQuery query("SELECT * FROM Kroki WHERE Klik=1");
     while(query.next())
@@ -90,6 +104,13 @@ void Step::on_okbtn_clicked()
         query2.bindValue(":Time",time);
         query2.exec();
     }
+
+    emit wyslij_path(path_sprawdz);
+    emit wyslij_speed(speed);
+    emit wyslij_posi(position_start);
+
+
+
     this->close();
 
 }
@@ -114,8 +135,61 @@ void Step::on_radiozostaw_clicked()
     radio = 0;
     ui->spinBox->setValue(a);
 }
+void Step::odbierzposition(qint32 position)
+{
+    qDebug()<<"odebrano";
+    position_start = position;
+    qDebug()<<position_start;
+}
+void Step::odbierzfilename(QString fileEname)
+{
+    filename = fileEname;
+}
 
 void Step::on_sprawdzbtn_clicked()
 {
+    player = new QMediaPlayer(this);
+    movie = new QMovie(this);
+
+    //muzyka
+    player->setMedia(QUrl::fromLocalFile(filename));
+    player->setPosition(position_start);
+    qDebug()<<position_start;
+    player->play();
+
+    //animacja
+
+    movie->setFileName(path_sprawdz);
+    movie->setScaledSize(QSize(120,120));
+    ui->naanimacje->setMovie(movie);
+    movie->start();
+
+    //ustalenie szybkości animacji
+    //zaznaczylismy ze zmieniamy
+    if(radio==1)
+    {
+        b = ui->spinBox->value();
+        qint32 temp = a*100;
+        speed_sprawdz = temp/b;
+        movie->setSpeed(speed_sprawdz);
+    }
+    //zaznaczylismy ze nie zmieniamy
+    else if(radio==0)
+    {
+        movie->setSpeed(100);
+    }
+
+
+    //zakończenie po animacji
+    connect(movie, &QMovie::frameChanged, this, &Step::zakoncz);
 
 }
+void Step::zakoncz()
+{
+    if(movie->currentFrameNumber() == (movie->frameCount() - 1))
+    {
+        movie->stop();
+        player->stop();
+    }
+}
+

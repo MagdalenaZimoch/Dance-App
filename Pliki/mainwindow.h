@@ -35,10 +35,21 @@ public:
     QVector<qint32> speed_sprawdz;
 
 
+
+
+
 public slots:
     void odtworz(int l);
 
     void startnewanim();
+
+    void ostatni();
+
+    void path_ostatni(QString path);
+
+    void position_ostatni(qint32 position);
+
+    void speed_ostatni(qint32 speed);
 private slots:
     void namesystem(QString name);
 
@@ -70,7 +81,8 @@ private:
     QVector<QMovie*> film;
     QString* nameofsystem;
 signals:
-
+    void wyslij(qint32 position);
+    void wyslij_filename(QString fileEname);
 
 };
 

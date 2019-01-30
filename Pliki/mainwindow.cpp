@@ -11,6 +11,10 @@
 
 QString namename;
 int i;
+QString path_ost;
+qint32 posi_ost;
+qint32 speed_ost;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -71,10 +75,6 @@ MainWindow::MainWindow(QWidget *parent) :
     player = new QMediaPlayer(this);
 
     //Za pomocą tego będzie wyświetlany końcowy układ:
-
-
-
-
     //Ikony przycisków
     ui->playbtn->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
     ui->stopbtn->setIcon(style()->standardIcon(QStyle::SP_MediaStop));
@@ -85,11 +85,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(player, &QMediaPlayer::positionChanged,this,&MainWindow::on_positionnchanged);
     connect(player, &QMediaPlayer::durationChanged,this,&MainWindow::on_durationnchanged);
+    Step* step = new Step();
+    connect(this, SIGNAL(wyslij(qint32)),step ,SLOT(odbierzposition(qint32)));
+    connect(this, SIGNAL(wyslij_filename(QString)),step ,SLOT(odbierzfilename(QString)));
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete player;
+    delete wideo;
 }
 
 void MainWindow::on_openbtn_clicked()
@@ -101,6 +107,7 @@ void MainWindow::on_openbtn_clicked()
     on_stopbtn_clicked();
     player->setMedia(QUrl::fromLocalFile(filename));
     ui->nameoffile->setText(name);
+    emit wyslij_filename(filename);
 }
 
 void MainWindow::on_progresslider_sliderMoved(int position)
@@ -124,14 +131,11 @@ void MainWindow::on_playbtn_clicked()
 {
     player->setVolume(100);
     player->play();
-    //film->start();
 }
 
 void MainWindow::on_stopbtn_clicked()
 {
     player->stop();
-    //film->stop();
-
 }
 
 void MainWindow::on_pausebtn_clicked()
@@ -149,6 +153,12 @@ void MainWindow::on_newstepbtn_clicked()
 void MainWindow::klickbtn()
 {
     player->pause();
+
+    qint32 temp_pos;
+    temp_pos = ui->progresslider->value();
+    qDebug()<<temp_pos;
+    emit wyslij(temp_pos);
+
     QObject* btn = QObject::sender();
     QSqlQuery query;
     QSqlQuery query2("SELECT *FROM Kroki");
@@ -182,7 +192,15 @@ void MainWindow::klickbtn()
     Step step;
     step.setModal(true);
     step.exec();
-    player->play();
+    //miejsce na funkcje odtwarzajaca wybrany krok z czasem
+
+
+
+
+
+
+
+    // ponowne odtworzenie przycisków
     for(int i=0;i<=a.length()-1;i++)
     {
         film[i]->start();
@@ -206,6 +224,7 @@ void MainWindow::odtworz(int l)
     connect(movie, &QMovie::frameChanged, this,
         [movie]()
         {
+
             if(movie->currentFrameNumber() == (movie->frameCount()-1))
              {
                  movie->stop();
@@ -223,7 +242,10 @@ void MainWindow::odtworz(int l)
 
 void MainWindow::on_pushButton_clicked()
 {
-
+    for(int i=0;i<=a.length()-1;i++)
+    {
+        film[i]->stop();
+    }
     ui->progresslider->setValue(0);
     player->setPosition(0);
     //połączenie z bazą danych
@@ -248,15 +270,19 @@ void MainWindow::on_pushButton_clicked()
                     QString path = query5.value(2).toString();
                     QString disc = query5.value(5).toString();
                     int time2 = query5.value(3).toInt();
-                    qint32 speedd =  time2*100/time;
+                    int temp = time2*100;
+                    qDebug()<<temp;
+                    qint32 speedd;
+                    speedd =  temp/time;
+                    qDebug()<<speedd;
                     path_sprawdz.append(path);
                     disc_sprawdz.append(disc);
                     speed_sprawdz.append(speedd);
                 }
-
             }
     }
     i = 0;
+    player->play();
     odtworz(i);
 
 }
@@ -272,6 +298,34 @@ void MainWindow::startnewanim()
         path_sprawdz.clear();
         disc_sprawdz.clear();
         speed_sprawdz.clear();
+        player->pause();
+        for(int i=0;i<=a.length()-1;i++)
+        {
+            film[i]->start();
+        }
     }
 }
+//przygotowane do odtworzenia otatniego wybranego kroku
+void MainWindow::ostatni()
+{
+    //path_ost;
+    //posi_ost;
+    //speed_ost;
+}
+void MainWindow::path_ostatni(QString path)
+{
+    qDebug()<<path;
+    path_ost=path;
+}
+void MainWindow::position_ostatni(qint32 position)
+{
+    qDebug()<<position;
+    posi_ost = position;
+}
+void MainWindow::speed_ostatni(qint32 speed)
+{
+    qDebug()<<speed;
+    speed_ost = speed;
+}
+
 

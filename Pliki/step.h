@@ -2,6 +2,7 @@
 #define STEP_H
 
 #include <QDialog>
+#include <QMediaPlayer>
 
 
 namespace Ui {
@@ -32,6 +33,11 @@ public slots:
 
     void odbierznazwa(QString nazwa);
 
+    void odbierzposition(qint32 position);
+
+    void odbierzfilename(QString fileEname);
+
+    void zakoncz();
 
 private:
     Ui::Step *ui;
@@ -40,6 +46,14 @@ public:
     QString *nazwaukladu;
     QTime *time;
     qint32 radio;
+    QMediaPlayer* player;
+    QMovie* movie;
+
+
+signals:
+    void wyslij_path(QString path_sprawdz);
+    void wyslij_speed(qint32 speed);
+    void wyslij_posi(qint32 position_start);
 
 
 };
