@@ -1,5 +1,5 @@
 # StepMusic - Aplikacja okienkowa/mobilna
-> Głównym celem programu będzie utworzenie układu tanecznego na podstawie wybranego utworu muzycznego.
+> Głównym celem aplikacji jest tworzenie układów tanecznych na podstawie wybranych przez użytkownika kroków wraz z możliwością dopasowania czasu ich trwania.
 
 ## 
 * [Opis](#Opis)
@@ -7,19 +7,36 @@
 
 
 ## Opis
-W tym projekcie zamierzam stworzyć aplikację, dzięki której użytkownik będzie mógł dopasować układ/krok taneczny do wybranego utworu muzycznego.
-Program będzie wyłapywał w utworze muzycznym m.in. rytm, następnie będzie dopasowywał kroki do określonych części piosenki, pokazując na ekranie obrazkowy komunikat jaki kolejny krok może zostać wykonany. W tym momencie użytkownik może dokonać wyboru, który krok ma zostać dołączony, tworząc na tej podstawie spójny układ taneczny.
-Określony wcześniej układ może zostać zapisany przez użytkownika, a następnie ponownie odtwarzany wraz z tłem muzycznym oraz
-czytelnie wyświetlonymi krokami w odpowiednim czasie, aby użytkownik mógł zobaczyć efekt swoich wyborów i nauczyć się go, bądź pokazać innym.
-Użytkownik będzie miał możliwość dodania własnej nazwy oraz czasu trwania nowego kroku aby móc 
-aktualizować bazę kroków tanecznych. 
 
+Aplikacja służy do tworzenia układów tanecznych, w której użytkownik decyduje o kolejności kroków oraz długości trwania do wybanego utworu muzycznego. 
 
+![Ekran startowy](https://github.com/MagdalenaZimoch/Projekt-C-/blob/master/Pliki/aplikacjamuzyczna1.PNG "Ekran Startowy")
+
+Na ekranie startowym możemy wczytać wcześniej utworzony układ taneczny bądź stworzyć nowy.
+
+![Wybór kroku](https://github.com/MagdalenaZimoch/Projekt-C-/blob/master/Pliki/aplikacjamuzyczna2.PNG "Wybór kroku")
+
+Po wybraniu nazwy układu tanecznego mamy dostęp do wszystkich plików typu gif prezentujących kroki taneczne. Możemy również wgrać plik muzyczny wczytując go z pamięci komputera. Po kliknięciu na animację kroku otworzy się okno w którym uzyskamy opis kroku, czas jego trwania wraz z możliwością ręcznej regulacji tego czasu oraz opcją sprawdzenia dopasowania z tłem muzycznym. 
+Po wybraniu odpowiednich dla użytkownika kryteriów oraz zatwierdzeniu krok zostaje dodany do układu w bazie danych.
+
+![Podgląd układu](https://github.com/MagdalenaZimoch/Projekt-C-/blob/master/Pliki/aplikacjamuzyczna4.PNG "Podgląd układu")
+
+Użytkownik może w każdej chwili sprawdzić na jakim etapie jest jego układ taneczny klikając przycisk "Podgląd". Po lewej stronie ekranu zobaczymy cały dotychczas utworzony układ wraz z poniżej umieszczonym opisem.
+
+![Nowa Animacja](https://github.com/MagdalenaZimoch/Projekt-C-/blob/master/Pliki/aplikacjamuzyczna3.PNG "Nowa animacja")
+
+Możliwość dodania nowego kroku pozwala na wczytanie pliku z pamięci komputera i dodania go do bazy danych.
 
 
 ## Język/biblioteki
-Do stworzenia mojego programu planuję użyć języka C++ oraz istniejących już bibliotek pozwalających na obsługiwanie plików muzycznych, 
-tworzenia aplikacji okienkowych na przykład: 
-* Bass
-* Qt5
+
+Projekt napisany w języku **C++**.
+
+Biblioteki użyte w projekcie to zestaw bibliotek **Qt5**.
+
+
+
+
+
+
 
