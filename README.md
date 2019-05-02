@@ -3,7 +3,7 @@
 
 ## 
 * [Opis](#Opis)
-* [Język \ biblioteki](#Język_\_biblioteki)
+* [Język](#Język)
 
 
 ## Opis
@@ -28,7 +28,7 @@ Użytkownik może w każdej chwili sprawdzić na jakim etapie jest jego układ t
 Możliwość dodania nowego kroku pozwala na wczytanie pliku z pamięci komputera i dodania go do bazy danych.
 
 
-## Język \ biblioteki
+## Język
 
 Projekt napisany w języku **C++**.
 
