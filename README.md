@@ -1,4 +1,4 @@
-# StepMusic - Aplikacja okienkowa/mobilna
+# StepMusic - Aplikacja okienkowa
 > Głównym celem aplikacji jest tworzenie układów tanecznych na podstawie wybranych przez użytkownika kroków wraz z możliwością dopasowania czasu ich trwania.
 
 ## 
